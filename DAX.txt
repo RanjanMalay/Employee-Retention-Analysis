@@ -1,0 +1,23 @@
+1.
+CalendarLookup = CALENDAR(MIN(EmpData[DOJ]),MAX(EmpData[Last Day]))
+
+2.
+Duration = DATEDIFF(Training[Date],RELATED(EmpData[Last Day]),DAY)
+
+3.
+Resigned Withn 3 Months = CALCULATE([Total Resigned],Training[Duration]<90)
+
+4.
+Total Resigned = CALCULATE(COUNTA(Training[Duration]))
+
+5.
+%Resigned in 3 Months = DIVIDE([Resigned Withn 3 Months],[Total Resigned],0)
+
+6.
+% Resigned in 3 Months Across All = DIVIDE([Resigned Withn 3 Months],CALCULATE([Resigned Withn 3 Months],ALL(EmpData[Dept]),All(EmpData[Designation]),All(EmpData[Location])))
+
+7.
+Total Employees = DISTINCTCOUNT(EmpData[EmpName])
+
+8.
+Retention Rate = DIVIDE([Total Employees]-[Resigned Withn 3 Months],[Total Employees],0)
